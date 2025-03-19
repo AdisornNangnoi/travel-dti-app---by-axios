@@ -11,6 +11,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Link, useNavigate } from "react-router-dom";
 import Travel from "./../assets/travel.png";
 import Profile from "./../assets/profile.png";
+import axios from "axios";
 
 function Register() {
   const [travellerImage, setTravellerImage] = useState(null);
@@ -18,7 +19,7 @@ function Register() {
   const [travellerEmail, setTravellerEmail] = useState("");
   const [travellerPassword, setTravellerPassword] = useState("");
 
-  const navigator =useNavigate();
+  const navigator = useNavigate();
 
   const handleSelectFileClick = (e) => {
     const file = e.target.files[0];
@@ -50,10 +51,19 @@ function Register() {
       }
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
-        const response = await fetch("http://localhost:4000/traveller/", {
-          method: "POST",
-          body: formData,
-        });
+        // const response = await fetch("http://localhost:4000/traveller/", {
+        //   method: "POST",
+        //   body: formData,
+        // });
+        const response = await axios.post(
+          "http://localhost:4000/traveller/",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         if (response.status == 201) {
           alert("ลงทะเบียนสําเร็จ");
           navigator("/");

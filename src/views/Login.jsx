@@ -3,35 +3,44 @@ import { Box, Typography, Avatar, TextField, Button } from "@mui/material"; //ma
 import Travel from "./../assets/travel.png"; //Logo image
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 function Login() {
   const [travellerEmail, setTravellerEmail] = useState();
   const [travellerPassword, setTravellerPassword] = useState();
   const handleLoginClick = async (e) => {
     e.preventDefault();
-    if(travellerEmail.length == 0){
-      alert("ป้อนอีเมล์ด้วย")
-      return
-    }else if(travellerPassword.length == 0){
-      alert("ป้อนรหัสผ่านด้วย")
-      return
+    if (travellerEmail.length == 0) {
+      alert("ป้อนอีเมล์ด้วย");
+      return;
+    } else if (travellerPassword.length == 0) {
+      alert("ป้อนรหัสผ่านด้วย");
+      return;
     }
     try {
-      const response = await fetch(`http://localhost:4000/traveller/${travellerEmail}/${travellerPassword}`, {
-        method: "GET",
-      });
-      if(response.status == 200){
-        const data = await response.json();
-        localStorage.setItem('traveller', JSON.stringify(data['data']))
-        window.location.href = '/mytravel'
-      }else if (response.status ==404) {
-        alert('ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง')
+      // const response = await fetch(
+      //   `http://localhost:4000/traveller/${travellerEmail}/${travellerPassword}`,
+      //   {
+      //     method: "GET",
+      //   }
+      // );
+      const response = await axios.get(
+        `http://localhost:4000/traveller/${travellerEmail}/${travellerPassword}`
+      );
+
+      if (response.status == 200) {
+        // const data = await response.json();
+        // localStorage.setItem("traveller", JSON.stringify(data["data"]));
+        // window.location.href = "/mytravel";
+
+        localStorage.setItem("traveller", JSON.stringify(response.data["data"]));
+        window.location.href = "/mytravel";
+      } else if (response.status == 404) {
+        alert("ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง");
       }
-      
     } catch (error) {
       alert("พบข้อผิดพลาด", error);
     }
-    
   };
   return (
     <Box
@@ -68,14 +77,23 @@ function Login() {
           ชื่อผู้ใช้
         </Typography>
         {/* TextField Username  =====================================*/}
-        <TextField fullWidth value={travellerEmail} onChange={(e) => setTravellerEmail(e.target.value)}/>
+        <TextField
+          fullWidth
+          value={travellerEmail}
+          onChange={(e) => setTravellerEmail(e.target.value)}
+        />
 
         <Typography sx={{ fontWeight: "bold", mt: 2, mb: 1 }}>
           รหัสผ่าน
         </Typography>
 
         {/* TextField passwords  =====================================*/}
-        <TextField fullWidth type="password" value={travellerPassword} onChange={(e) => setTravellerPassword(e.target.value)} />
+        <TextField
+          fullWidth
+          type="password"
+          value={travellerPassword}
+          onChange={(e) => setTravellerPassword(e.target.value)}
+        />
         <Button
           variant="contained"
           fullWidth

@@ -8,6 +8,7 @@ import {
   Avatar,
   TextField,
   styled,
+  hexToRgb,
 } from "@mui/material";
 import React from "react";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
@@ -16,6 +17,7 @@ import { useEffect, useState } from "react";
 import Profile from "./../assets/profile.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Travel from "./../assets/travel.png";
+import axios from "axios";
 
 function EditMyTravel() {
   const [travellerFullname, setTravellerFullname] = useState("");
@@ -61,13 +63,22 @@ function EditMyTravel() {
       }
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
-        const response = await fetch(
+        // const response = await fetch(
+        //   `http://localhost:4000/travel/${travelId}`,
+        //   {
+        //     method: "PUT",
+        //     body: formData,
+        //   }
+        // );
+        const response = await axios.put(
           `http://localhost:4000/travel/${travelId}`,
-          {
-            method: "PUT",
-            body: formData,
+          formData,{
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
         );
+
         if (response.status == 200) {
           alert("แก้ไขการเดินทางสําเร็จ");
           window.location.href = "/mytravel";
@@ -102,22 +113,30 @@ function EditMyTravel() {
     setTravellerId(traveller.travellerId);
 
     const getTravel = async () => {
-      const resData = await fetch(
-        `http://localhost:4000/travel/one/${travelId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      // const resData = await fetch(
+      //   `http://localhost:4000/travel/one/${travelId}`,
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
+      const resData = await axios.get(
+        `http://localhost:4000/travel/one/${travelId}`
       );
 
-      const data = await resData.json();
-      setTravelPlace(data["data"].travelPlace);
-      setTravelCostTotal(data["data"].travelCostTotal);
-      setTravelStartDate(data["data"].travelStartDate);
-      seTtravelEndDate(data["data"].travelEndDate);
-      setTravelImage(data["data"].travelImage);
+      // const data = await resData.json();
+      // setTravelPlace(data["data"].travelPlace);
+      // setTravelCostTotal(data["data"].travelCostTotal);
+      // setTravelStartDate(data["data"].travelStartDate);
+      // seTtravelEndDate(data["data"].travelEndDate);
+      // setTravelImage(data["data"].travelImage);
+      setTravelPlace(resData.data["data"].travelPlace);
+      setTravelCostTotal(resData.data["data"].travelCostTotal);
+      setTravelStartDate(resData.data["data"].travelStartDate);
+      seTtravelEndDate(resData.data["data"].travelEndDate);
+      setTravelImage(resData.data["data"].travelImage);
     };
     getTravel();
   }, []);

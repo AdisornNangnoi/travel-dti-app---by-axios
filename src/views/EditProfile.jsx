@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import Travel from "./../assets/travel.png";
+import axios from "axios";
 
 function EditProfile() {
   const [travellerFullname, setTravellerFullname] = useState("");
@@ -80,18 +81,28 @@ function EditProfile() {
     formData.append("travellerPassword", travellerPassword);
 
     try {
-      const response = await fetch(
+      // const response = await fetch(
+      //   `http://localhost:4000/traveller/${travellerId}`,
+      //   {
+      //     method: "PUT",
+      //     body: formData,
+      //   }
+      // );
+      const response = await axios.put(
         `http://localhost:4000/traveller/${travellerId}`,
-        {
-          method: "PUT",
-          body: formData,
-        }
+        formData,
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
       );
 
       if (response.status == 200) {
         alert("แก้ไขข้อมูลเรียบร้อยแล้ว");
-        const data = await response.json();
-        localStorage.setItem("traveller", JSON.stringify(data["data"]));
+        // const data = await response.json();
+        // localStorage.setItem("traveller", JSON.stringify(data["data"]));
+        localStorage.setItem("traveller", JSON.stringify(response.data["data"]));
         navigate("/mytravel");
       }
     } catch (error) {

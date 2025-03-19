@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import Profile from "./../assets/profile.png";
 import { Link } from "react-router-dom";
 import Travel from "./../assets/travel.png";
+import axios from "axios";
 
 function AddMyTravel() {
   const [travellerFullname, setTravellerFullname] = useState("");
@@ -72,10 +73,16 @@ function AddMyTravel() {
       }
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
-        const response = await fetch("http://localhost:4000/travel/", {
-          method: "POST",
-          body: formData,
+        // const response = await fetch("http://localhost:4000/travel/", {
+        //   method: "POST",
+        //   body: formData,
+        // });
+        const response = await axios.post("http://localhost:4000/travel/", formData,{
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
+
         if (response.status == 201) {
           alert("บันทึกการเดินทางสําเร็จ");
           window.location.href = "/mytravel";

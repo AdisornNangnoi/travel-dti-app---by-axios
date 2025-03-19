@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Avatar,
+  dialogActionsClasses,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -21,6 +22,7 @@ import Profile from "./../assets/profile.png";
 import Place from "./../assets/travel.png";
 import { Link } from "react-router-dom";
 import { Try } from "@mui/icons-material";
+import axios from "axios";
 
 function MyTravel() {
   const [travellerFullname, setTravellerFullname] = useState("");
@@ -49,18 +51,22 @@ function MyTravel() {
 
     //ดึงขข้อมูลมาแสดง
     const getAllTravel = async () => {
-      const resData = await fetch(
-        `http://localhost:4000/travel/${traveller.travellerId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      // const resData = await fetch(
+      //   `http://localhost:4000/travel/${traveller.travellerId}`,
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
+      const resData = await axios.get(
+        `http://localhost:4000/travel/${traveller.travellerId}`
       );
       if (resData.status == 200) {
-        const data = await resData.json();
-        setTravel(data["data"]);
+        // const data = await resData.json();
+        // setTravel(data["data"]);
+        setTravel(resData.data["data"]);
       }
     };
     getAllTravel();
@@ -68,20 +74,25 @@ function MyTravel() {
 
   const handleDeleteTravelClick = async (travelId) => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/travel/${travelId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      // const response = await fetch(`http://localhost:4000/travel/${travelId}`, {
+      //   method: "DELETE",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      const isConfirmed = window.confirm(
+        "คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?"
       );
-      if (response.status === 200) {
-        alert("ลบข้อมูลเรียบร้อยแล้ว");
-        window.location.href = "/mytravel";
-      }else{
-        alert("ลบข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
+      if (isConfirmed) {
+        const response = await axios.delete(
+          `http://localhost:4000/travel/${travelId}`
+        );
+        if (response.status === 200) {
+          alert("ลบข้อมูลเรียบร้อยแล้ว");
+          window.location.href = "/mytravel";
+        } else {
+          alert("ลบข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
+        }
       }
     } catch (error) {
       alert("พบข้อผิดพลาด", error);
@@ -188,8 +199,17 @@ function MyTravel() {
                     <TableCell align="left">{row.travelEndDate}</TableCell>
                     <TableCell align="right">{row.travelCostTotal}</TableCell>
                     <TableCell align="center">
-                      <Button component={Link} to={`/editmytravel/${row.travelId}`}>แก้ไข</Button>
-                      <Button onClick={() => handleDeleteTravelClick(row.travelId)}>ลบ</Button>
+                      <Button
+                        component={Link}
+                        to={`/editmytravel/${row.travelId}`}
+                      >
+                        แก้ไข
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteTravelClick(row.travelId)}
+                      >
+                        ลบ
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
