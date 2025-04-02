@@ -82,14 +82,14 @@ function EditProfile() {
 
     try {
       // const response = await fetch(
-      //   `travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerId}`,
+      //   `https://travel-service-server-by-prisma-iota.vercel.app//traveller/${travellerId}`,
       //   {
       //     method: "PUT",
       //     body: formData,
       //   }
       // );
       const response = await axios.put(
-        `travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerId}`,
+        `https://travel-service-server-by-prisma-iota.vercel.app//traveller/${travellerId}`,
         formData,
         // {
         //   headers: {

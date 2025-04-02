@@ -52,7 +52,7 @@ function MyTravel() {
     //ดึงขข้อมูลมาแสดง
     const getAllTravel = async () => {
       // const resData = await fetch(
-      //   `travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`,
+      //   `https://travel-service-server-by-prisma-iota.vercel.app//travel/${traveller.travellerId}`,
       //   {
       //     method: "GET",
       //     headers: {
@@ -61,7 +61,7 @@ function MyTravel() {
       //   }
       // );
       const resData = await axios.get(
-        `travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`
+        `https://travel-service-server-by-prisma-iota.vercel.app//travel/${traveller.travellerId}`
       );
       if (resData.status == 200) {
         // const data = await resData.json();
@@ -74,7 +74,7 @@ function MyTravel() {
 
   const handleDeleteTravelClick = async (travelId) => {
     try {
-      // const response = await fetch(`travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`, {
+      // const response = await fetch(`https://travel-service-server-by-prisma-iota.vercel.app//travel/${travelId}`, {
       //   method: "DELETE",
       //   headers: {
       //     "Content-Type": "application/json",
@@ -85,7 +85,7 @@ function MyTravel() {
       );
       if (isConfirmed) {
         const response = await axios.delete(
-          `travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`
+          `https://travel-service-server-by-prisma-iota.vercel.app//travel/${travelId}`
         );
         if (response.status === 200) {
           alert("ลบข้อมูลเรียบร้อยแล้ว");

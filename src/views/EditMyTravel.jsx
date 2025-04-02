@@ -64,14 +64,14 @@ function EditMyTravel() {
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
         // const response = await fetch(
-        //   `travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`,
+        //   `https://travel-service-server-by-prisma-iota.vercel.app//travel/${travelId}`,
         //   {
         //     method: "PUT",
         //     body: formData,
         //   }
         // );
         const response = await axios.put(
-          `travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`,
+          `https://travel-service-server-by-prisma-iota.vercel.app//travel/${travelId}`,
           formData,{
             headers: {
               "Content-Type": "multipart/form-data",
@@ -114,7 +114,7 @@ function EditMyTravel() {
 
     const getTravel = async () => {
       // const resData = await fetch(
-      //   `travel-service-server-by-prisma-iota.vercel.app/travel/one/${travelId}`,
+      //   `https://travel-service-server-by-prisma-iota.vercel.app//travel/one/${travelId}`,
       //   {
       //     method: "GET",
       //     headers: {
@@ -123,7 +123,7 @@ function EditMyTravel() {
       //   }
       // );
       const resData = await axios.get(
-        `travel-service-server-by-prisma-iota.vercel.app/travel/one/${travelId}`
+        `https://travel-service-server-by-prisma-iota.vercel.app//travel/one/${travelId}`
       );
 
       // const data = await resData.json();
