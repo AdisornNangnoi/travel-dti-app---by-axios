@@ -48,10 +48,11 @@ function MyTravel() {
     const traveller = JSON.parse(localStorage.getItem("traveller")) || {};
     setTravellerFullname(traveller.travellerFullname || "");
     setTravellerImage(traveller.travellerImage || "");
-  
+
     //ดึงขข้อมูลมาแสดง
     const getAllTravel = async () => {
-      if (traveller.travellerId) { // ตรวจสอบว่ามี travellerId หรือไม่
+      if (traveller.travellerId) {
+        // ตรวจสอบว่ามี travellerId หรือไม่
         try {
           const resData = await axios.get(
             `https://travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`
@@ -131,11 +132,7 @@ function MyTravel() {
                 <Button color="inherit">{travellerFullname}</Button>
               </Link>
               <Avatar
-                src={
-                  travellerImage === ""
-                    ? Profile
-                    : `${travellerImage}`
-                }
+                src={travellerImage === "" ? Profile : `${travellerImage}`}
               />
               <Link
                 to={"/"}
@@ -188,9 +185,7 @@ function MyTravel() {
                       {
                         <Avatar
                           src={
-                            row.travelImage == ""
-                              ? Place
-                              : `${row.travelImage}`
+                            row.travelImage == "" ? Place : `${row.travelImage}`
                           }
                           sx={{ width: 60, height: 60, boxShadow: 3 }}
                           variant="rounded"
