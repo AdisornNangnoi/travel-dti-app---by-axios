@@ -14,9 +14,8 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useEffect, useState } from "react";
 import Profile from "./../assets/profile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Travel from "./../assets/travel.png";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AddMyTravel() {
@@ -75,24 +74,25 @@ function AddMyTravel() {
       }
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
-        // const response = await fetch("https://travel-service-server-by-prisma-iota.vercel.app/travel/", {
-        //   method: "POST",
-        //   body: formData,
-        // });
-        const response = await axios.post("https://travel-service-server-by-prisma-iota.vercel.app/travel/", formData,{
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axios.post(
+          "https://travel-service-server-by-prisma-iota.vercel.app/travel/",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-        if (response.status == 201) {
-          alert("บันทึกการเดินทางสําเร็จ");
+        if (response.status === 201) {
+          alert("บันทึกการเดินทางสำเร็จ");
           navigate("/mytravel"); // เรียกใช้ฟังก์ชัน navigate เพื่อเปลี่ยนเส้นทาง
         } else {
-          alert("บันทึกการเดินทางไม่สําเร็จ กรุณาลองใหม่อีกครั้ง");
+          alert("บันทึกการเดินทางไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
         }
       } catch (error) {
         alert("พบข้อผิดพลาด", error);
+        console.error("Error saving travel:", error); // เพิ่มการ log error เพื่อดูรายละเอียด
       }
     }
   };
@@ -101,9 +101,11 @@ function AddMyTravel() {
     //เอาข้อมูลใน memory มาแสดงที่ Appbar
     const traveller = JSON.parse(localStorage.getItem("traveller"));
     //เอาข้อมูลในตัวแปรมากำหนดให้ตัวแปรใน useState
-    setTravellerFullname(traveller.travellerFullname);
-    setTravellerImage(traveller.travellerImage);
-    setTravellerId(traveller.travellerId);
+    if (traveller) {
+      setTravellerFullname(traveller.travellerFullname);
+      setTravellerImage(traveller.travellerImage);
+      setTravellerId(traveller.travellerId);
+    }
   }, []);
   return (
     <>
@@ -135,11 +137,7 @@ function AddMyTravel() {
                 <Button color="inherit">{travellerFullname}</Button>
               </Link>
               <Avatar
-                src={
-                  travellerImage == ""
-                    ? Profile
-                    : `${travellerImage}`
-                }
+                src={travellerImage === "" ? Profile : `${travellerImage}`}
               />
               <Link
                 to={"/"}
