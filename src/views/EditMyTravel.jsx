@@ -19,6 +19,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Travel from "./../assets/travel.png";
 import axios from "axios";
 
+
 function EditMyTravel() {
   const [travellerFullname, setTravellerFullname] = useState("");
   const [travellerImage, setTravellerImage] = useState("");

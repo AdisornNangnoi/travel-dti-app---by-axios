@@ -13,6 +13,7 @@ import Travel from "./../assets/travel.png";
 import Profile from "./../assets/profile.png";
 import axios from "axios";
 
+
 function Register() {
   const [travellerImage, setTravellerImage] = useState(null);
   const [travellerFullname, setTravellerFullname] = useState("");
