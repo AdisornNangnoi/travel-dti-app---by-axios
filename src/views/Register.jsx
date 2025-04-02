@@ -51,12 +51,12 @@ function Register() {
       }
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
-        // const response = await fetch("http://localhost:4000/traveller/", {
+        // const response = await fetch("travel-service-server-by-prisma-iota.vercel.app/traveller/", {
         //   method: "POST",
         //   body: formData,
         // });
         const response = await axios.post(
-          "http://localhost:4000/traveller/",
+          "travel-service-server-by-prisma-iota.vercel.app/traveller/",
           formData,
           {
             headers: {

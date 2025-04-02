@@ -19,13 +19,13 @@ function Login() {
     }
     try {
       // const response = await fetch(
-      //   `http://localhost:4000/traveller/${travellerEmail}/${travellerPassword}`,
+      //   `travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerEmail}/${travellerPassword}`,
       //   {
       //     method: "GET",
       //   }
       // );
       const response = await axios.get(
-        `http://localhost:4000/traveller/${travellerEmail}/${travellerPassword}`
+        `travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerEmail}/${travellerPassword}`
       );
 
       if (response.status == 200) {

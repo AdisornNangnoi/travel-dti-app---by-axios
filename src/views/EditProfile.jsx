@@ -82,14 +82,14 @@ function EditProfile() {
 
     try {
       // const response = await fetch(
-      //   `http://localhost:4000/traveller/${travellerId}`,
+      //   `travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerId}`,
       //   {
       //     method: "PUT",
       //     body: formData,
       //   }
       // );
       const response = await axios.put(
-        `http://localhost:4000/traveller/${travellerId}`,
+        `travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerId}`,
         formData,
         // {
         //   headers: {
@@ -134,7 +134,7 @@ function EditProfile() {
               <Avatar
                 src={
                   travellerImage
-                    ? `http://localhost:4000/images/traveller/${travellerImage}`
+                    ? `${travellerImage}`
                     : Profile
                 }
               />
@@ -201,7 +201,7 @@ function EditProfile() {
             src={
               travellerNewImage
                 ? URL.createObjectURL(travellerNewImage)
-                : `http://localhost:4000/images/traveller/${travellerImage}`
+                : `${travellerImage}`
             }
             alt="profile"
             sx={{ width: 150, height: 150, mx: "auto", my: 3 }}

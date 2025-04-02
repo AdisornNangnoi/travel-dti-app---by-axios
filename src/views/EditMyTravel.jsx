@@ -64,14 +64,14 @@ function EditMyTravel() {
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
         // const response = await fetch(
-        //   `http://localhost:4000/travel/${travelId}`,
+        //   `travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`,
         //   {
         //     method: "PUT",
         //     body: formData,
         //   }
         // );
         const response = await axios.put(
-          `http://localhost:4000/travel/${travelId}`,
+          `travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`,
           formData,{
             headers: {
               "Content-Type": "multipart/form-data",
@@ -114,7 +114,7 @@ function EditMyTravel() {
 
     const getTravel = async () => {
       // const resData = await fetch(
-      //   `http://localhost:4000/travel/one/${travelId}`,
+      //   `travel-service-server-by-prisma-iota.vercel.app/travel/one/${travelId}`,
       //   {
       //     method: "GET",
       //     headers: {
@@ -123,7 +123,7 @@ function EditMyTravel() {
       //   }
       // );
       const resData = await axios.get(
-        `http://localhost:4000/travel/one/${travelId}`
+        `travel-service-server-by-prisma-iota.vercel.app/travel/one/${travelId}`
       );
 
       // const data = await resData.json();
@@ -172,7 +172,7 @@ function EditMyTravel() {
               src={
                 travellerImage == ""
                   ? Profile
-                  : `http://localhost:4000/images/traveller/${travellerImage}`
+                  : `${travellerImage}`
               }
             />
             <Link
@@ -267,7 +267,7 @@ function EditMyTravel() {
             travelNewImage == null
               ? travelImage == ""
                 ? Travel
-                : `http://localhost:4000/images/travel/${travelImage}`
+                : `${travelImage}`
               : URL.createObjectURL(travelNewImage)
           }
           alt="Place"

@@ -52,7 +52,7 @@ function MyTravel() {
     //ดึงขข้อมูลมาแสดง
     const getAllTravel = async () => {
       // const resData = await fetch(
-      //   `http://localhost:4000/travel/${traveller.travellerId}`,
+      //   `travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`,
       //   {
       //     method: "GET",
       //     headers: {
@@ -61,7 +61,7 @@ function MyTravel() {
       //   }
       // );
       const resData = await axios.get(
-        `http://localhost:4000/travel/${traveller.travellerId}`
+        `travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`
       );
       if (resData.status == 200) {
         // const data = await resData.json();
@@ -74,7 +74,7 @@ function MyTravel() {
 
   const handleDeleteTravelClick = async (travelId) => {
     try {
-      // const response = await fetch(`http://localhost:4000/travel/${travelId}`, {
+      // const response = await fetch(`travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`, {
       //   method: "DELETE",
       //   headers: {
       //     "Content-Type": "application/json",
@@ -85,7 +85,7 @@ function MyTravel() {
       );
       if (isConfirmed) {
         const response = await axios.delete(
-          `http://localhost:4000/travel/${travelId}`
+          `travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`
         );
         if (response.status === 200) {
           alert("ลบข้อมูลเรียบร้อยแล้ว");
@@ -132,7 +132,7 @@ function MyTravel() {
                 src={
                   travellerImage === ""
                     ? Profile
-                    : `http://localhost:4000/images/traveller/${travellerImage}`
+                    : `${travellerImage}`
                 }
               />
               <Link
@@ -188,7 +188,7 @@ function MyTravel() {
                           src={
                             row.travelImage == ""
                               ? Place
-                              : `http://localhost:4000/images/travel/${row.travelImage}`
+                              : `${row.travelImage}`
                           }
                           sx={{ width: 60, height: 60, boxShadow: 3 }}
                           variant="rounded"
