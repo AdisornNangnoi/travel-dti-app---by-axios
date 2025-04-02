@@ -95,7 +95,9 @@ function MyTravel() {
         // Handle different response statuses
         if (response.status === 200) {
           alert("ลบข้อมูลเรียบร้อยแล้ว");
-          navigate("/mytravel");
+          // navigate("/mytravel");
+          // Remove the deleted travel from the state (assuming `travels` is your state)
+        setTravels((prevTravels) => prevTravels.filter(travel => travel.travelId !== travelId));
         } else if (response.status === 404) {
           alert("ไม่พบข้อมูลที่ต้องการลบ");
         } else {
