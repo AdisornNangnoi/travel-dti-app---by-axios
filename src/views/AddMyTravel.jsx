@@ -29,6 +29,7 @@ function AddMyTravel() {
   const [travelEndDate, seTtravelEndDate] = useState("");
   const [travellerId, setTravellerId] = useState("");
 
+  const navigate = useNavigate();
   const handleSelectFileClick = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -85,7 +86,7 @@ function AddMyTravel() {
 
         if (response.status == 201) {
           alert("บันทึกการเดินทางสําเร็จ");
-          window.location.href = "/mytravel";
+          navigate("/mytravel"); // เรียกใช้ฟังก์ชัน navigate เพื่อเปลี่ยนเส้นทาง
         } else {
           alert("บันทึกการเดินทางไม่สําเร็จ กรุณาลองใหม่อีกครั้ง");
         }

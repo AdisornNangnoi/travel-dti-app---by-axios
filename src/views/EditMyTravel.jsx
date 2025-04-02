@@ -32,6 +32,7 @@ function EditMyTravel() {
   const [travelEndDate, seTtravelEndDate] = useState("");
   const [travellerId, setTravellerId] = useState("");
 
+  const navigate = useNavigate();
   const handleSelectFileClick = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -81,7 +82,7 @@ function EditMyTravel() {
 
         if (response.status == 200) {
           alert("แก้ไขการเดินทางสําเร็จ");
-          window.location.href = "/mytravel";
+          navigate("/mytravel");
         } else {
           alert("แก้ไขการเดินทางไม่สําเร็จ กรุณาลองใหม่อีกครั้ง");
         }

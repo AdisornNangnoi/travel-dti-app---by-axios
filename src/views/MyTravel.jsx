@@ -29,6 +29,7 @@ function MyTravel() {
   const [travellerImage, setTravellerImage] = useState("");
   const [travel, setTravel] = useState([]);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const handleStorageChange = () => {
       const traveller = JSON.parse(localStorage.getItem("traveller")) || {};
@@ -92,7 +93,7 @@ function MyTravel() {
         );
         if (response.status === 200) {
           alert("ลบข้อมูลเรียบร้อยแล้ว");
-          window.location.href = "/mytravel";
+          navigate("/mytravel");
         } else {
           alert("ลบข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
         }
