@@ -48,29 +48,31 @@ function MyTravel() {
     const traveller = JSON.parse(localStorage.getItem("traveller")) || {};
     setTravellerFullname(traveller.travellerFullname || "");
     setTravellerImage(traveller.travellerImage || "");
-
+  
     //ดึงขข้อมูลมาแสดง
     const getAllTravel = async () => {
-      // const resData = await fetch(
-      //   `https://travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`,
-      //   {
-      //     method: "GET",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
-      const resData = await axios.get(
-        `https://travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`
-      );
-      if (resData.status == 200) {
-        // const data = await resData.json();
-        // setTravel(data["data"]);
-        setTravel(resData.data["data"]);
+      if (traveller.travellerId) { // ตรวจสอบว่ามี travellerId หรือไม่
+        try {
+          const resData = await axios.get(
+            `https://travel-service-server-by-prisma-iota.vercel.app/travel/${traveller.travellerId}`
+          );
+          if (resData.status === 200) {
+            setTravel(resData.data["data"]);
+          } else {
+            console.error("Failed to fetch travel data:", resData.status);
+            // อาจจัดการข้อผิดพลาด เช่น แสดงข้อความให้ผู้ใช้
+          }
+        } catch (error) {
+          console.error("Error fetching travel data:", error);
+          // อาจจัดการข้อผิดพลาด
+        }
+      } else {
+        console.warn("travellerId not found in local storage.");
+        // อาจแสดงข้อความว่าไม่มีผู้ใช้เข้าสู่ระบบ
       }
     };
     getAllTravel();
-  }, []); // ทำงานแค่ครั้งแรกและเมื่อข้อมูลใน localStorage เปลี่ยนแปลง
+  }, []);
 
   const handleDeleteTravelClick = async (travelId) => {
     try {
