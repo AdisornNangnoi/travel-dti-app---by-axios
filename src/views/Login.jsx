@@ -33,9 +33,12 @@ function Login() {
         // localStorage.setItem("traveller", JSON.stringify(data["data"]));
         // window.location.href = "/mytravel";
 
-        localStorage.setItem("traveller", JSON.stringify(response.data["data"]));
+        localStorage.setItem(
+          "traveller",
+          JSON.stringify(response.data["data"])
+        );
         window.location.href = "/mytravel";
-      } else if (response.status == 404) {
+      } else if (response.status === 404) {
         alert("ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง");
       }
     } catch (error) {
