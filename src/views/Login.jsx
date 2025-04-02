@@ -41,7 +41,8 @@ function Login() {
           "traveller",
           JSON.stringify(response.data["data"])
         );
-        navigate = "/mytravel";
+        navigate("/mytravel"); // เรียกใช้ฟังก์ชัน navigate เพื่อเปลี่ยนเส้นทาง
+
       } else if (response.status === 404) {
         alert("ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง");
       }
