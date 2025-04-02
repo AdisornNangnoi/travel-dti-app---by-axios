@@ -8,6 +8,9 @@ import axios from "axios";
 function Login() {
   const [travellerEmail, setTravellerEmail] = useState();
   const [travellerPassword, setTravellerPassword] = useState();
+
+  const navigate = useNavigate();
+
   const handleLoginClick = async (e) => {
     e.preventDefault();
     if (travellerEmail.length == 0) {
@@ -37,7 +40,7 @@ function Login() {
           "traveller",
           JSON.stringify(response.data["data"])
         );
-        window.location.href = "/mytravel";
+        navigate = "/mytravel";
       } else if (response.status === 404) {
         alert("ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง");
       }
