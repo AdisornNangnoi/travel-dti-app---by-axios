@@ -78,28 +78,45 @@ function MyTravel() {
 
   const handleDeleteTravelClick = async (travelId) => {
     try {
-      // const response = await fetch(`https://travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`, {
-      //   method: "DELETE",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
+      // Show confirmation dialog
       const isConfirmed = window.confirm(
         "คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?"
       );
+
       if (isConfirmed) {
+        // Set a loading state (optional, if you want to show loading UI)
+        const loadingMessage = alert("กำลังลบข้อมูล...");
+
+        // Send delete request
         const response = await axios.delete(
           `https://travel-service-server-by-prisma-iota.vercel.app/travel/${travelId}`
         );
+
+        // Handle different response statuses
         if (response.status === 200) {
           alert("ลบข้อมูลเรียบร้อยแล้ว");
           navigate("/mytravel");
+        } else if (response.status === 404) {
+          alert("ไม่พบข้อมูลที่ต้องการลบ");
         } else {
           alert("ลบข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
         }
+
+        // Close loading alert (optional)
+        // loadingMessage.close(); // You would need to implement this part if you show a custom loading UI
       }
     } catch (error) {
-      alert("พบข้อผิดพลาด", error);
+      // Improved error handling
+      if (error.response) {
+        // Server responded with an error
+        alert(`พบข้อผิดพลาด: ${error.response.data.message}`);
+      } else if (error.request) {
+        // No response received
+        alert("ไม่สามารถติดต่อเซิร์ฟเวอร์ได้");
+      } else {
+        // Something went wrong in the setup of the request
+        alert("พบข้อผิดพลาดในการตั้งค่า: " + error.message);
+      }
     }
   };
 
