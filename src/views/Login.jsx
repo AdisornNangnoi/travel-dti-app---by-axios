@@ -24,13 +24,8 @@ function Login() {
       //     method: "GET",
       //   }
       // );
-      // const response = await axios.get(
-      //   `https://travel-service-server-by-prisma-iota.vercel.app//traveller/${travellerEmail}/${travellerPassword}`
-      // );
       const response = await axios.get(
-        `https://travel-service-server-by-prisma-iota.vercel.app/traveller/${encodeURIComponent(
-          travellerEmail
-        )}/${encodeURIComponent(travellerPassword)}`
+        `https://travel-service-server-by-prisma-iota.vercel.app//traveller/${travellerEmail}/${travellerPassword}`
       );
 
       if (response.status == 200) {
