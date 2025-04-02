@@ -1,53 +1,46 @@
 import React from "react";
-import { Box, Typography, Avatar, TextField, Button } from "@mui/material"; //material ui
-import Travel from "./../assets/travel.png"; //Logo image
-import { Link } from "react-router-dom";
+import { Box, Typography, Avatar, TextField, Button } from "@mui/material";
+import Travel from "./../assets/travel.png"; 
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 function Login() {
-  const [travellerEmail, setTravellerEmail] = useState();
-  const [travellerPassword, setTravellerPassword] = useState();
+  const [travellerEmail, setTravellerEmail] = useState("");
+  const [travellerPassword, setTravellerPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleLoginClick = async (e) => {
     e.preventDefault();
-    if (travellerEmail.length == 0) {
+    if (!travellerEmail.trim()) {
       alert("ป้อนอีเมล์ด้วย");
       return;
-    } else if (travellerPassword.length == 0) {
+    } 
+    if (!travellerPassword.trim()) {
       alert("ป้อนรหัสผ่านด้วย");
       return;
     }
+
     try {
-      // const response = await fetch(
-      //   `https://travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerEmail}/${travellerPassword}`,
-      //   {
-      //     method: "GET",
-      //   }
-      // );
       const response = await axios.get(
-        `https://travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerEmail}/${travellerPassword}`
+        `https://travel-service-server-by-prisma-iota.vercel.app/traveller/${encodeURIComponent(travellerEmail)}/${encodeURIComponent(travellerPassword)}`
       );
 
-      if (response.status == 200) {
-        // const data = await response.json();
-        // localStorage.setItem("traveller", JSON.stringify(data["data"]));
-        // window.location.href = "/mytravel";
+      console.log("API Response:", response.data);
 
-        localStorage.setItem(
-          "traveller",
-          JSON.stringify(response.data["data"])
-        );
-        navigate = "/mytravel";
-      } else if (response.status === 404) {
+      if (response.status === 200 && response.data) {
+        localStorage.setItem("traveller", JSON.stringify(response.data));
+        navigate("/mytravel");
+      } else {
         alert("ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง");
       }
     } catch (error) {
-      alert("พบข้อผิดพลาด", error);
+      console.error("Login Error:", error);
+      alert("เกิดข้อผิดพลาดในการเข้าสู่ระบบ กรุณาลองใหม่");
     }
   };
+
   return (
     <Box
       sx={{
@@ -58,31 +51,20 @@ function Login() {
       }}
     >
       <Box sx={{ width: "60%", boxShadow: 4, mx: "auto", my: "auto", p: 5 }}>
-        {/* Head text =====================================*/}
-        <Typography
-          variant="h5"
-          sx={{ textAlign: "center", fontWeight: "bold" }}
-        >
+        <Typography variant="h5" sx={{ textAlign: "center", fontWeight: "bold" }}>
           Travel DTI
         </Typography>
-        {/* Logo image =====================================*/}
-        <Avatar
-          src={Travel}
-          alt="travel logo"
-          sx={{ width: 150, height: 150, mx: "auto", my: 5 }}
-        ></Avatar>
-        {/* Login text =====================================*/}
-        <Typography
-          variant="h5"
-          sx={{ textAlign: "center", fontWeight: "bold" }}
-        >
+
+        <Avatar src={Travel} alt="travel logo" sx={{ width: 150, height: 150, mx: "auto", my: 5 }} />
+
+        <Typography variant="h5" sx={{ textAlign: "center", fontWeight: "bold" }}>
           เข้าใช้งานระบบ
         </Typography>
 
         <Typography sx={{ fontWeight: "bold", mt: 4, mb: 1 }}>
           ชื่อผู้ใช้
         </Typography>
-        {/* TextField Username  =====================================*/}
+
         <TextField
           fullWidth
           value={travellerEmail}
@@ -93,13 +75,13 @@ function Login() {
           รหัสผ่าน
         </Typography>
 
-        {/* TextField passwords  =====================================*/}
         <TextField
           fullWidth
           type="password"
           value={travellerPassword}
           onChange={(e) => setTravellerPassword(e.target.value)}
         />
+
         <Button
           variant="contained"
           fullWidth
@@ -109,14 +91,8 @@ function Login() {
           LOGIN
         </Button>
 
-        {/* Link to Resgister Page */}
-        <Link
-          to="/register"
-          style={{ textDecoration: "none", color: "#259e69" }}
-        >
-          <Typography
-            sx={{ fontWeight: "bold", mt: 2, mb: 1, textAlign: "center" }}
-          >
+        <Link to="/register" style={{ textDecoration: "none", color: "#259e69" }}>
+          <Typography sx={{ fontWeight: "bold", mt: 2, mb: 1, textAlign: "center" }}>
             ลงทะเบียน
           </Typography>
         </Link>
