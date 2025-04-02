@@ -19,7 +19,7 @@ function Login() {
     }
     try {
       // const response = await fetch(
-      //   `https://travel-service-server-by-prisma-iota.vercel.app//traveller/${travellerEmail}/${travellerPassword}`,
+      //   `https://travel-service-server-by-prisma-iota.vercel.app/traveller/${travellerEmail}/${travellerPassword}`,
       //   {
       //     method: "GET",
       //   }

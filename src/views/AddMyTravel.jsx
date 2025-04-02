@@ -73,11 +73,11 @@ function AddMyTravel() {
       }
       //ส่งข้อมูลไปให้ API (https://localhost:4000/traveller/) บันทึงลง DB
       try {
-        // const response = await fetch("https://travel-service-server-by-prisma-iota.vercel.app//travel/", {
+        // const response = await fetch("https://travel-service-server-by-prisma-iota.vercel.app/travel/", {
         //   method: "POST",
         //   body: formData,
         // });
-        const response = await axios.post("https://travel-service-server-by-prisma-iota.vercel.app//travel/", formData,{
+        const response = await axios.post("https://travel-service-server-by-prisma-iota.vercel.app/travel/", formData,{
           headers: {
             "Content-Type": "multipart/form-data",
           },
